@@ -220,9 +220,9 @@ class SendVTCCurrentPose(OpenRTM_aist.DataFlowComponentBase):
 	def onExecute(self, ec_id):
 		ret = self.send_zmq_req.receive_data()
 		data = ret["Report"]["Data"]
-		self._d_currentPose.data.heading = float(data["yaw"]) * math.pi / 180  # [rad]
-		self._d_currentPose.data.position.x = float(data["position"]["x"]) / 100 - INIT_POSE_X  # [m]
-		self._d_currentPose.data.position.y = float(data["position"]["y"]) / 100 - INIT_POSE_Y  # [m]
+		self._d_currentPose.data.heading = round(float(data["yaw"]) * math.pi / 180, 5)  # [rad]
+		self._d_currentPose.data.position.x = round(float(data["position"]["x"]) / 100 - INIT_POSE_X, 5)  # [m]
+		self._d_currentPose.data.position.y = round(float(data["position"]["y"]) / 100 - INIT_POSE_Y, 5)  # [m]
 		print(self._d_currentPose)
 		self._currentPoseOut.write()
 	
